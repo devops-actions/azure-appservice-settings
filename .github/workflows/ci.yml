@@ -20,6 +20,11 @@ jobs:
     - name: 'Checking out repo code'
       uses: actions/checkout@v4
 
+    - name: 'Setup Node.js'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
     - name: 'Validate build'
       run: |
         npm install
@@ -31,8 +36,9 @@ jobs:
 
     # validate if the dist folder has no changes that are not commited
     - name: Check for uncommitted changes
+      shell: pwsh
       run: |
-        if [[ -n $(git status --porcelain) ]]; then
-          echo "dist folder has changes that are not committed"
+        if ((git status --porcelain).Length -ne 0) {
+          Write-Output "dist folder has changes that are not committed"
           exit 1
-        fi
+        }
