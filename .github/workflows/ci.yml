@@ -29,10 +29,9 @@ jobs:
         npm run test
 
     # validate if the dist folder has no changes that are not commited
-    - name: 'Check for dist folder changes'
+    - name: Check for uncommitted changes
       run: |
-        git diff --exit-code --name-only ${{ github.sha }} ${{ github.sha }}^
-        if [ $? -eq 1 ]; then
-          echo "dist folder has changes that are not commited"
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "dist folder has changes that are not committed"
           exit 1
         fi
