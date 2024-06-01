@@ -1,10 +1,13 @@
 # GitHub Action for configuring Azure App service Settings
+> Note: Forked from [Azure/appservice-settings](https://github.com/Azure/appservice-settings) to add support for Node20 runtime which is now [required](https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/).and the upstream repo is not repsonding to updates ([issues/44](https://github.com/Azure/appservice-settings/issues/44) and [issues/38](https://github.com/Azure/appservice-settings/issues/38)).
+> 
+> Request issues through the issues in this new repo and I will have a look!
 
 With the Azure App Service Actions for GitHub, you can automate your workflow to deploy [Azure Web Apps](https://azure.microsoft.com/en-us/services/app-service/web/) and configure [App settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common).
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
-This repository contains GitHub Action for [Azure App Service Settings](https://github.com/Azure/appservice-settings) to configure App settings, connection strings and other general settings in bulk using JSON syntax on your Azure WebApp (Windows or Linux) or any of its deployment slots. 
+This repository contains GitHub Action for [Azure App Service Settings](https://github.com/devops-actions/appservice-settings) to configure App settings, connection strings and other general settings in bulk using JSON syntax on your Azure WebApp (Windows or Linux) or any of its deployment slots. 
 
 The action works for ASP.NET, ASP.NET Core, PHP, Java, Python, Go and Node.js based web applications.
 
@@ -134,7 +137,7 @@ jobs:
         slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
         app-settings-json: '[{ "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "1", "slotSetting": false }]'
       id: settings
-      
+
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
     - run: |
         az logout
