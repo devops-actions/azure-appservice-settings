@@ -1,5 +1,5 @@
 # app service settings action
-name: 'Azure App Service Settings'
+name: 'Azure App Service Settings for Node20'
 description: 'Configure Azure Apps with app settings, connection strings and other general configuration settings'
 inputs: 
   app-name: # id of input
