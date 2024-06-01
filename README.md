@@ -99,7 +99,8 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-    - uses: azure/appservice-settings@v1
+
+    - uses: devops-actions/appservice-settings@v1
       with:
         app-name: 'my-app'
         slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
@@ -107,6 +108,7 @@ jobs:
         connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
       id: settings
+
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
     - run: |
         az logout
@@ -124,13 +126,15 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-    - uses: azure/appservice-settings@v1
+
+    - uses: devops-actions/appservice-settings@v1
       with:
         app-name: 'my-app'
         mask-inputs: false
         slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
         app-settings-json: '[{ "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "1", "slotSetting": false }]'
       id: settings
+      
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
     - run: |
         az logout
