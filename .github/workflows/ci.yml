@@ -1,7 +1,11 @@
 on:
+  push: 
+    branches:
+      - main
+
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build_test_job:
@@ -23,3 +27,12 @@ jobs:
     - name: 'Run L0 tests'
       run: |
         npm run test
+
+    # validate if the dist folder has no changes that are not commited
+    - name: 'Check for dist folder changes'
+      run: |
+        git diff --exit-code --name-only ${{ github.sha }} ${{ github.sha }}^
+        if [ $? -eq 1 ]; then
+          echo "dist folder has changes that are not commited"
+          exit 1
+        fi
