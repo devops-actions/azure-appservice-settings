@@ -3,6 +3,8 @@
 > 
 > Request issues through the issues in this new repo and I will have a look!
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/devops-actions/azure-appservice-settings/badge)](https://api.securityscorecards.dev/projects/github.com/devops-actions/azure-appservice-settings)
+
 With the Azure App Service Actions for GitHub, you can automate your workflow to deploy [Azure Web Apps](https://azure.microsoft.com/en-us/services/app-service/web/) and configure [App settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common).
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
@@ -97,7 +99,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: azure/login@v1
       with:
@@ -124,7 +126,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: azure/login@v1
       with:
