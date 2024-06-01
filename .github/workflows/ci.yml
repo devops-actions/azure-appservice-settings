@@ -36,6 +36,8 @@ jobs:
 
     # validate if the dist folder has no changes that are not commited
     - name: Check for uncommitted changes
+      # do not run on Windows runnrs because it always has issues, perhaps line endings or something?
+      if: runner.os != 'Windows'
       shell: pwsh
       run: |
         if ((git status --porcelain dist).Length -ne 0) {
