@@ -40,7 +40,7 @@ jobs:
       run: |
         if ((git status --porcelain dist).Length -ne 0) {
           Write-Output "dist folder has changes that are not committed:"
-          git status
+          git status --porcelain dist
           exit 1
         }
         else {
