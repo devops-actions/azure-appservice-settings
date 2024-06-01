@@ -6,7 +6,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@types/babel__traverse": "^7.17.1",
-    "@types/q": "^1.5.2",
+    "@types/q": "^1.5.8",
     "azure-actions-appservice-rest": "^1.3.12",
     "azure-actions-webclient": "^1.1.1"
   },
