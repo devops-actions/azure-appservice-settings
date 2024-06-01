@@ -38,7 +38,11 @@ jobs:
     - name: Check for uncommitted changes
       shell: pwsh
       run: |
-        if ((git status --porcelain).Length -ne 0) {
-          Write-Output "dist folder has changes that are not committed"
+        if ((git status --porcelain dist).Length -ne 0) {
+          Write-Output "dist folder has changes that are not committed:"
+          git status
           exit 1
+        }
+        else {
+          Write-Output "dist folder has no changes"
         }
