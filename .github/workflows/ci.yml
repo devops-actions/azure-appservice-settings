@@ -12,8 +12,9 @@ jobs:
     name: 'Build and test job'
     runs-on: ${{ matrix.os }}
     strategy:
+        fail-fast: false
         matrix:
-          os: [windows-latest, ubuntu-latest, macos-latest]
+          os: [windows-latest, ubuntu-latest, macos-latest]        
     steps:
 
     - name: 'Checking out repo code'
