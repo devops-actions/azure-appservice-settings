@@ -3986,6 +3986,40 @@ class Kudu {
             }
         });
     }
+    oneDeploy(webPackage, queryParameters) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let httpRequest = {
+                method: 'POST',
+                uri: this._client.getRequestUri(`/api/publish`, queryParameters),
+                body: fs.createReadStream(webPackage)
+            };
+            try {
+                let response = yield this._client.beginRequest(httpRequest, null, 'application/octet-stream');
+                core.debug(`One Deploy response: ${JSON.stringify(response)}`);
+                if (response.statusCode == 200) {
+                    core.debug('Deployment passed');
+                    return null;
+                }
+                else if (response.statusCode == 202) {
+                    let pollableURL = response.headers.location;
+                    if (!!pollableURL) {
+                        core.debug(`Polling for One Deploy URL: ${pollableURL}`);
+                        return yield this._getDeploymentDetailsFromPollURL(pollableURL);
+                    }
+                    else {
+                        core.debug('One Deploy returned 202 without pollable URL.');
+                        return null;
+                    }
+                }
+                else {
+                    throw response;
+                }
+            }
+            catch (error) {
+                throw Error("Failed to deploy web package using OneDeploy to App Service.\n" + this._getFormattedError(error));
+            }
+        });
+    }
     getDeploymentDetails(deploymentID) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
