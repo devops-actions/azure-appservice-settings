@@ -17386,7 +17386,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.main = void 0;
+exports.main = main;
 const core = __importStar(__nccwpck_require__(2186));
 const crypto = __importStar(__nccwpck_require__(6113));
 const Utils_1 = __nccwpck_require__(1866);
@@ -17446,7 +17446,6 @@ function main() {
         }
     });
 }
-exports.main = main;
 main();
 
 
