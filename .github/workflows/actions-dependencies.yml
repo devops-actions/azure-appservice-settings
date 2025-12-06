@@ -1,3 +1,4 @@
+
 name: Submit Actions Dependencies
 on:
   push:
@@ -7,12 +8,6 @@ on:
 
 jobs:
   submit-dependencies:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # Required to read workflow files
-      id-token: write # Required for dependency submission
-    steps:
-      - uses: actions/checkout@v4
-      - uses: jessehouwing/actions-dependency-submission@v0.0.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+    uses: devops-actions/.github/.github/workflows/actions-dependencies.yml@main
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
