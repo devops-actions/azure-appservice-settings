@@ -32,6 +32,8 @@ The definition of this Github Action is in [action.yml](https://github.com/Azure
 ## Configure GitHub Secrets with Azure Credentials, App Settings and Connection Strings
 For using any sensitive data/secrets like Azure Service Principal, App Settings or Connection Strings within an Action, add them as [secrets](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) in the GitHub repository and then use them in the workflow. If you do not have sensitive information in the app-settings -json and connection-strings-json and do not want to set it as secret, set `mask-inputs` as false in the workflow. By default, `mask-inputs` will be true. If `mask-inputs: false` is not provided, app-settings-json and connection-strings-json will be set as secrets and masked in logs. `mask-inputs` is not applicable to general-settings-json.
 
+You can also set `treat-empty-as-not-set: true` to skip creating or updating any settings whose value is empty or blank. This is useful when settings are dynamically composed and some values may be empty depending on environment conditions. By default, `treat-empty-as-not-set` is `false` and all settings are applied regardless of value.
+
 Follow the steps to configure the secrets:
   * Define a new secret under your repository **Settings** > **Secrets** > **Add a new secret** menu
   * Paste the contents of the below [az cli](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) command as the value of secret variable, for example 'AZURE_CREDENTIALS'
