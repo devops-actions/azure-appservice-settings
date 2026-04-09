@@ -1,0 +1,14 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Force TS source files to LF
+*.ts text eol=lf
+
+# dist bundle: treat as binary so ncc CRLF output is preserved exactly as built
+dist/index.js -text
+
+# Force binary for files that shouldn't be modified
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

@@ -25,6 +25,7 @@ export async function main() {
         let ConnectionStrings: string = core.getInput('connection-strings-json', {required: false});
         let ConfigurationSettings: string = core.getInput('general-settings-json', {required: false});
         const maskInputs: string = core.getInput('mask-inputs', { required: false }).toLowerCase();
+        const treatEmptyAsNotSet: string = core.getInput('treat-empty-as-not-set', { required: false });
         let applicationURL: string;
 
         if(!AppSettings && !ConnectionStrings && !ConfigurationSettings) {
@@ -43,17 +44,17 @@ export async function main() {
         let appServiceUtility: AzureAppServiceUtility = new AzureAppServiceUtility(appService);
 
         if(AppSettings) {
-            let customApplicationSettings = Utils.validateSettings(AppSettings, maskInputs);
+            let customApplicationSettings = Utils.validateSettings(AppSettings, maskInputs, treatEmptyAsNotSet);
             await appServiceUtility.updateAndMonitorAppSettings(customApplicationSettings, null);
         }
 
         if(ConnectionStrings) {
-            let customConnectionStrings = Utils.validateSettings(ConnectionStrings, maskInputs);
+            let customConnectionStrings = Utils.validateSettings(ConnectionStrings, maskInputs, treatEmptyAsNotSet);
             await appServiceUtility.updateConnectionStrings(customConnectionStrings);
         }
         
         if(ConfigurationSettings) {
-            let customConfigurationSettings = Utils.validateSettings(ConfigurationSettings);
+            let customConfigurationSettings = Utils.validateSettings(ConfigurationSettings, undefined, treatEmptyAsNotSet);
             await appServiceUtility.updateConfigurationSettings(customConfigurationSettings);
         }
 

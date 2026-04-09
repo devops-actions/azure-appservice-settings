@@ -68,7 +68,7 @@ describe('Test Azure App Service Settings', () => {
             console.log(e);
         }
 
-        expect(getInputSpy).toHaveBeenCalledTimes(6);
+        expect(getInputSpy).toHaveBeenCalledTimes(7);
         expect(appDetails).toHaveBeenCalled();
         expect(getApplicationURLSpy).toHaveBeenCalled();
     });
@@ -114,11 +114,36 @@ describe('Test Azure App Service Settings', () => {
             console.log(e);
         }
 
-        expect(getInputSpy).toHaveBeenCalledTimes(6);
+        expect(getInputSpy).toHaveBeenCalledTimes(7);
         expect(appDetails).toHaveBeenCalled();
         expect(getApplicationURLSpy).toHaveBeenCalled();
         expect(validateSettingsSpy).toHaveBeenCalled();
         expect(maskValuesSpy).not.toHaveBeenCalled();
+    });
+
+    it("filters empty values when treat-empty-as-not-set is true", () => {
+        const settings = [
+            { name: "KEY1", value: "somevalue" },
+            { name: "KEY2", value: "" },
+            { name: "KEY3", value: "   " },
+            { name: "KEY4", value: null },
+            { name: "KEY5", value: "another" }
+        ];
+        const infoSpy = jest.spyOn(core, 'info').mockImplementation(() => {});
+        const result = Utils.filterEmptyValues(settings);
+        expect(result).toHaveLength(2);
+        expect(result.map((s: any) => s.name)).toEqual(["KEY1", "KEY5"]);
+        expect(infoSpy).toHaveBeenCalledTimes(3);
+    });
+
+    it("keeps empty values when treat-empty-as-not-set is false", () => {
+        const settingsJson = JSON.stringify([
+            { name: "KEY1", value: "somevalue" },
+            { name: "KEY2", value: "" },
+            { name: "KEY3", value: null }
+        ]);
+        const result = Utils.validateSettings(settingsJson, undefined, 'false');
+        expect(result).toHaveLength(3);
     });
 
 });

@@ -44,9 +44,11 @@ jobs:
       if: runner.os != 'Windows'
       shell: pwsh
       run: |
+        git update-index --refresh
         if ((git status --porcelain dist).Length -ne 0) {
           Write-Output "dist folder has changes that are not committed:"
           git status --porcelain dist
+          Write-Output "built: $((Get-FileHash dist/index.js -Algorithm SHA256).Hash)"
           exit 1
         }
         else {
