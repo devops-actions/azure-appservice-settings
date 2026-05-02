@@ -14,12 +14,12 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.6.0",
     "@vercel/ncc": "^0.38.4",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "build": "ncc build src/main.ts -o dist",
