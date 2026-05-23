@@ -1,5 +1,12 @@
 name: Rebuild dist on Linux
 on:
+  push:
+    branches:
+      - 'dependabot/**'
+    paths:
+      - 'src/**'
+      - 'package-lock.json'
+      - 'package.json'
   workflow_dispatch:
     inputs:
       branch:
@@ -16,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: ${{ github.event.inputs.branch }}
+        ref: ${{ github.event.inputs.branch || github.ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/setup-node@v4
