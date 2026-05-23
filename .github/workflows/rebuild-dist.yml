@@ -1,0 +1,43 @@
+name: Rebuild dist on Linux
+on:
+  push:
+    branches:
+      - 'dependabot/**'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to rebuild dist on'
+        required: true
+        default: 'dependabot/npm_and_yarn/qs-6.15.2'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch || github.ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+
+    - run: npm ci
+
+    - run: npm run build
+
+    - name: Commit updated dist
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add dist/index.js
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "chore: rebuild dist/index.js on Linux"
+          git push
+        fi
