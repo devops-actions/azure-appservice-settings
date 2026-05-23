@@ -3,10 +3,6 @@ on:
   push:
     branches:
       - 'dependabot/**'
-    paths:
-      - 'src/**'
-      - 'package-lock.json'
-      - 'package.json'
   workflow_dispatch:
     inputs:
       branch:
