@@ -4,8 +4,8 @@
 # Force TS source files to LF
 *.ts text eol=lf
 
-# dist bundle: treat as binary so ncc CRLF output is preserved exactly as built
-dist/index.js -text
+# dist bundle: force LF so Windows-built and Linux-built output is identical in git
+dist/index.js text eol=lf
 
 # Force binary for files that shouldn't be modified
 *.png binary
