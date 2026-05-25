@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - 'dependabot/**'
+      - 'rajbos/**'
+ 
   workflow_dispatch:
     inputs:
       branch:
@@ -24,7 +26,7 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: '24'
+        node-version: '20'
 
     - run: npm ci
 
