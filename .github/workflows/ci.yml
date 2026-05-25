@@ -42,17 +42,19 @@ jobs:
 
     # validate if the dist folder has no changes that are not commited
     - name: Check for uncommitted changes
-      # do not run on Windows runnrs because it always has issues, perhaps line endings or something?
+      # Compare using git's normalized (eol=lf) content so CRLF differences between
+      # platforms don't cause false failures. We stage the freshly-built file (which
+      # applies the eol=lf normalization from .gitattributes) then diff against HEAD.
       if: runner.os != 'Windows'
-      shell: pwsh
+      shell: bash
       run: |
-        git update-index --refresh
-        if ((git status --porcelain dist).Length -ne 0) {
-          Write-Output "dist folder has changes that are not committed:"
-          git status --porcelain dist
-          Write-Output "built: $((Get-FileHash dist/index.js -Algorithm SHA256).Hash)"
+        git add dist/index.js
+        if git diff --cached --quiet -- dist/index.js; then
+          echo "dist folder has no changes"
+          git restore --staged dist/index.js
+        else
+          echo "dist folder has changes that are not committed:"
+          git diff --cached --stat -- dist/index.js
+          git restore --staged dist/index.js
           exit 1
-        }
-        else {
-          Write-Output "dist folder has no changes"
-        }
+        fi
