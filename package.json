@@ -16,9 +16,9 @@
     "@swc/core": "^1.16.2",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.4.0",
     "esbuild": "^0.28.2",
-    "jest": "^30.4.2",
+    "jest": "^30.5.0",
     "typescript": "^7.0.2"
   },
   "scripts": {
