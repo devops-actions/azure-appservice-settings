@@ -13,16 +13,16 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@swc/core": "^1.16.2",
+    "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.4.0",
-    "@vercel/ncc": "^0.45.0",
+    "esbuild": "^0.28.2",
     "jest": "^30.5.0",
-    "ts-jest": "^29.4.12",
-    "ts-node": "^10.9.2",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "scripts": {
-    "build": "ncc build src/main.ts -o dist",
+    "build": "tsc --noEmit && esbuild src/main.ts --bundle --platform=node --target=node24 --outfile=dist/index.js",
     "test": "jest"
   },
   "author": "Shivangi Mittal",
